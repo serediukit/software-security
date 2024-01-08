@@ -172,26 +172,31 @@
 
         createButton.addEventListener("click", (e) => {
             e.preventDefault();
-            const email = createForm.login.value;
+            const login = createForm.login.value;
             const password = createForm.password.value;
 
             axios({
                 method: 'post',
                 url: '/api/create',
                 data: {
-                    email,
+                    login,
                     password
                 }
             }).then((response) => {
+                createErrorMsg.style.opacity = 0;
+                createErrorMsg2.style.opacity = 0;
                 createSuccessfulMsg.style.opacity = 1;
             }).catch((response) => {
                 createErrorMsg.style.opacity = 0;
                 createErrorMsg2.style.opacity = 0;
-                console.log(response.response);
-                if (response.response.data.error.message === 'The user already exists.')
-                    createErrorMsg.style.opacity = 1;
-                else
-                    createErrorMsg2.style.opacity = 1;
+                createSuccessfulMsg.style.opacity = 0;
+                console.log(response.response.data.error)
+                // if (response.response.data.error.message === 'The user already exists.') {
+                //     createErrorMsg.style.opacity = 1;
+                // } else {
+                //     createErrorMsg2.style.opacity = 1;
+                //     createErrorMsg2.innerHTML = response.response.data.error.message;
+                // }
             });
         })
     </script>

@@ -63,7 +63,6 @@ app.get('/create-user', (req, res) => {
 
 app.get('/api/create', async (req, res) => {
     const { login, password } = req.body
-
     try {
         const respUserToken = await axios.post(
             TOKEN_URL,
@@ -84,20 +83,25 @@ app.get('/api/create', async (req, res) => {
         const respRefreshToken = await axios.post(
             `${AUDIENCE}users`,
             {
-                connection: 'Username-Password-Authentication',
                 email: login,
-                password: password
+                password: password,
+                connection: 'Username-Password-Authentication'
             },
             {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${respUserToken.data.access_token}`
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${respUserToken.data.access_token}`
+                }
             }
         )
 
-        res.status(201).json({
-            message: 'User created'
-        })
+        if (respRefreshToken.data)
+            res.status(201).json({
+                message: 'User created'
+            })
+        else
+            res.status(401)
     } catch (err) {
         res.status(401).json({
             error: err.response.data
@@ -121,8 +125,10 @@ app.get('/api/refresh', async (req, res) => {
                 refresh_token: refresh_token
             },
             {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
             }
         )
 
