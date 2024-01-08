@@ -157,20 +157,18 @@ app.post('/api/refresh', async (req, res) => {
 })
 
 app.post('/api/login', async (req, res) => {
-    const { login, password } = req.body;
+    const { code } = req.body;
 
     try {
         const resp = await axios.post(
             TOKEN_URL,
             {
                 audience: AUDIENCE,
-                grant_type: GRANT_TYPE_PASSWORD_REALM,
+                grant_type: 'authorization_code',
                 client_id: CLIENT_ID,
                 client_secret: CLIENT_SECRET,
-                scope: 'offline_access',
-                realm: 'Username-Password-Authentication',
-                username: login,
-                password: password
+                code: code,
+                redirect_uri: 'http://localhost:3000'
             },
             {
                 headers: {
@@ -181,8 +179,7 @@ app.post('/api/login', async (req, res) => {
         )
         res.status(201).json({
             access_token: resp.data.access_token,
-            refresh_token: resp.data.refresh_token,
-            username: login
+            refresh_token: resp.data.refresh_token
         })
     } catch (err) {
         res.status(401).json({

@@ -153,6 +153,24 @@
             if (exp < Math.floor(Date.now() / 1000) - 60) {
                 refreshToken()
             }
+        } else {
+            const code = new URLSearchParams(window.location.search).get('code')
+
+            if (code) {
+                axios.post(
+                    '/api/login',
+                    {
+                        code: code
+                    }
+                ).then((response) => {
+                    sessionStorage.setItem('access_token', response.data.access_token)
+                    sessionStorage.setItem('refresh_token', response.data.refresh_token)
+                    location.reload()
+                }).catch((response) => {
+                    sessionStorage.removeItem('access_token')
+                    sessionStorage.removeItem('refresh_token')
+                })
+            }
         }
 
         const loginForm = document.getElementById("login-form");
