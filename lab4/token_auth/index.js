@@ -6,6 +6,14 @@ const path = require('path');
 const port = 3000;
 const fs = require('fs');
 const jsonWebToken = require('jsonwebtoken')
+const axios = require('axios')
+
+const CLIENT_ID = 'MaMofmHMvlLkgmcAPiuYoKVANd5G1rPw'
+const CLIENT_SECRET = '7cYPsb7oiXjY27GopxjjEozjwKbxeJFhG3SPXKYzwrkQLSPIijEAshQueWbel53z'
+const URL = 'https://dev-o64lwhkf.us.auth0.com/'
+const AUDIENCE = 'https://dev-o64lwhkf.us.auth0.com/api/v2/'
+const GRANT_TYPE = 'http://auth0.com/oauth/grant-type/password-realm'
+const SESSION_KEY = 'Authorization'
 
 const app = express();
 app.use(bodyParser.json());
@@ -38,6 +46,10 @@ function verifyJsonWebToken(req, res, next) {
     )
 }
 
+app.get('/create-user', (req, res) => {
+    return res.sendFile(path.join(__dirname + '/create-user.html'));
+});
+
 const users = [
     {
         login: 'Login',
@@ -51,24 +63,35 @@ const users = [
     }
 ]
 
-app.post('/api/login', (req, res) => {
+app.post('/api/login', async (req, res) => {
     const { login, password } = req.body;
 
-    const user = users.find((user) => {
-        return user.login === login && user.password === password;
-    });
-
-    if (user) {
-        const token = jsonWebToken.sign(
-            {
-                username: user.username,
-                login: user.login
-            },
-            'secret'
-        )
-        res.json({ token });
-    } else
-        res.status(401).send();
+    try {
+        const resp = await axios.post('$oauth/token', {
+            audience: AUDIENCE,
+            grant_type: GRANT_TYPE,
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            scope: 'offline_access',
+            realm: 'Username-Password-Authentication',
+            username: login,
+            password: password
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+        res.status(201).json({
+            access_token: resp.data.access_token,
+            refresh_token: resp.data.refresh_token,
+            username: login
+        })
+    } catch (err) {
+        res.status(401).json({
+            error: err.response.data
+        })
+    }
 });
 
 app.listen(port, () => {
