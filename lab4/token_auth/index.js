@@ -24,7 +24,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', verifyJsonWebToken, (req, res) => {
     res.json({
         username: req.user.username,
-        logout: 'http://localhost:3000/logout'
+        logout: 'http://localhost:3000/logout',
+        exp: req.exp
     });
 })
 
@@ -32,20 +33,28 @@ app.get('/logout', (req, res) => {
     res.redirect('/')
 });
 
-function verifyJsonWebToken(req, res, next) {
+async function verifyJsonWebToken(req, res, next) {
     const token = req.header('Authorization')
     if (!token)
         return res.sendFile(path.join(__dirname + '/index.html'))
-    jsonWebToken.verify(
-        token,
-        'secret',
-        (err, decoded) => {
-            if (err)
-                return res.sendFile(path.join(__dirname + '/index.html'))
-            req.user = decoded
-            next()
-        }
-    )
+    let decoded = jsonWebToken.decode(token)
+    if (!decoded)
+        return res.sendFile(path.join(__dirname + '/index.html'))
+
+    const currTime = Math.floor(Date.now() / 1000);
+    if (decoded.exp > currTime) {
+        const resp = await axios.get(
+            `${AUDIENCE}users/${decoded.sub}`,
+            {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }
+        )
+        req.user = resp.data.name
+        req.exp = decoded.exp
+    }
+    next()
 }
 
 app.get('/create-user', (req, res) => {
