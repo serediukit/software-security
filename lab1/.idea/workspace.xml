@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8bce330-b41c-4b65-bd78-c302c96ebdfe" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/forms_auth/sessions.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/token_auth/sessions.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/token_auth/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/token_auth/index.js" afterDir="false" />
-    </list>
+    <list default="true" id="c8bce330-b41c-4b65-bd78-c302c96ebdfe" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,9 +23,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2abbJVFxoBw97GKTuGpNzU2RBLH" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -46,7 +39,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "lab1",
+    "git-widget-placeholder": "lab4",
     "ignore.virus.scanning.warn.message": "true",
     "javascript.nodejs.core.library.configured.version": "21.5.0",
     "javascript.nodejs.core.library.typings.version": "20.10.6",
@@ -69,6 +62,7 @@
       <option name="presentableId" value="Default" />
       <updated>1704590154138</updated>
       <workItem from="1704590155137" duration="3388000" />
+      <workItem from="1704676251329" duration="23000" />
     </task>
     <servers />
   </component>
