@@ -61,7 +61,7 @@ app.get('/create-user', (req, res) => {
     return res.sendFile(path.join(__dirname + '/create-user.html'));
 });
 
-app.get('/api/create', async (req, res) => {
+app.post('/api/create', async (req, res) => {
     const { login, password } = req.body
     try {
         const respUserToken = await axios.post(
@@ -109,7 +109,7 @@ app.get('/api/create', async (req, res) => {
     }
 })
 
-app.get('/api/refresh', async (req, res) => {
+app.post('/api/refresh', async (req, res) => {
     const { refresh_token } = req.body
 
     try {
