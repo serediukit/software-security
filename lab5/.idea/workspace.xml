@@ -20,9 +20,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2agZXmJoCIEzm7CKiE3gsyduhOg" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -39,7 +39,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "lab5",
+    "git-widget-placeholder": "lab6",
     "last_opened_file_path": "D:/git/software-security/lab5",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -58,6 +58,7 @@
       <option name="presentableId" value="Default" />
       <updated>1704742224352</updated>
       <workItem from="1704742225346" duration="1120000" />
+      <workItem from="1704749439575" duration="12000" />
     </task>
     <servers />
   </component>
