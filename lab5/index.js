@@ -1,10 +1,8 @@
-const uuid = require('uuid');
 const express = require('express');
-const onFinished = require('on-finished');
 const bodyParser = require('body-parser');
 const path = require('path');
 const port = 3000;
-const fs = require('fs');
+const fs = require('fs')
 const jsonWebToken = require('jsonwebtoken')
 const axios = require('axios')
 
@@ -37,24 +35,39 @@ async function verifyJsonWebToken(req, res, next) {
     const token = req.header('Authorization')
     if (!token)
         return res.sendFile(path.join(__dirname + '/index.html'))
-    let decoded = jsonWebToken.decode(token)
-    if (!decoded)
-        return res.sendFile(path.join(__dirname + '/index.html'))
 
-    const currTime = Math.floor(Date.now() / 1000);
-    if (decoded.exp > currTime) {
-        const resp = await axios.get(
-            `${AUDIENCE}users/${decoded.sub}`,
+    try {
+        const privateKey = fs.readFileSync('https://dev-o64lwhkf.us.auth0.com/pem')
+        jsonWebToken.verify(
+            token,
+            privateKey,
             {
-                headers: {
-                    'Authorization': `Bearer ${token}`
+                algorithms: ['RS256']
+            },
+            async (err, decoded) => {
+                if (err)
+                    return res.sendFile(path.join(__dirname + '/index.html'))
+                const currTime = Math.floor(Date.now() / 1000);
+                if (decoded.exp > currTime) {
+                    const resp = await axios.get(
+                        `${AUDIENCE}users/${decoded.sub}`,
+                        {
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        }
+                    )
+                    req.user = resp.data.name
+                    req.exp = decoded.exp
                 }
+                next()
             }
         )
-        req.user = resp.data.name
-        req.exp = decoded.exp
+    } catch (err) {
+        return res.status(500).json({
+            error: 'Private key error'
+        })
     }
-    next()
 }
 
 app.get('/create-user', (req, res) => {
