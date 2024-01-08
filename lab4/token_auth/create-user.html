@@ -191,12 +191,12 @@
                 createErrorMsg2.style.opacity = 0;
                 createSuccessfulMsg.style.opacity = 0;
                 console.log(response.response.data.error)
-                // if (response.response.data.error.message === 'The user already exists.') {
-                //     createErrorMsg.style.opacity = 1;
-                // } else {
-                //     createErrorMsg2.style.opacity = 1;
-                //     createErrorMsg2.innerHTML = response.response.data.error.message;
-                // }
+                if (response.response.data.error.message === 'The user already exists.') {
+                    createErrorMsg.style.opacity = 1;
+                } else {
+                    createErrorMsg2.style.opacity = 1;
+                    createErrorMsg2.innerHTML = response.response.data.error.message;
+                }
             });
         })
     </script>
