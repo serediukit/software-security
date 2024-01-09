@@ -1,6 +1,6 @@
-const crypto = require('crypto');
+const crypto = require('crypto')
 
-const data = '0222, valentyn serediuk, serediukit@gmail.com';
+const data = '0222, valentyn serediuk, serediukit@gmail.com'
 
 const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
