@@ -2,6 +2,7 @@
   "name": "cw",
   "version": "1.0.0",
   "dependencies": {
+    "crypto": "^1.0.1",
     "crypto-js": "^4.2.0"
   }
 }
